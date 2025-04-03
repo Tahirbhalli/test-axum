@@ -11,9 +11,9 @@ pub struct User {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct LoginDto{
-  pub email: String,
-  pub password: String
+pub struct LoginDto {
+    pub email: String,
+    pub password: String,
 }
 
 #[derive(Debug, Deserialize, Validate)]
@@ -24,7 +24,7 @@ pub struct CreateUser {
     pub email: String,
     #[validate(length(min = 8))]
     pub password: String,
-    pub phone: String
+    pub phone: String,
 }
 
 #[derive(Debug, Deserialize, Validate)]

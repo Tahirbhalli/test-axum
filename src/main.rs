@@ -1,7 +1,7 @@
 mod db;
+mod dto;
 mod handlers;
 mod midlewares;
-mod dto;
 mod routes;
 use dotenv::dotenv;
 use routes::create_routes;
