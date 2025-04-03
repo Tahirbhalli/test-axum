@@ -1,16 +1,6 @@
-use std::sync::Arc;
-use tokio::sync::Mutex;
+use sea_orm::DatabaseConnection;
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Post {
-    pub id: usize,
-    pub msg: String,
-    pub likes: u32,
-}
-
-#[derive(Clone, Default)]
+#[derive(Clone)]
 pub struct AppState {
-    pub posts: Arc<Mutex<Vec<Post>>>,
+    pub db: DatabaseConnection, // SeaORM's database connection
 }
