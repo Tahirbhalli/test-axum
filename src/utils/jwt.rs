@@ -4,7 +4,7 @@ use axum::http::StatusCode;
 use chrono::{Duration, Utc};
 use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, Validation};
 
-use crate::{dto::jwt_dto::Claims, error::AppError};
+use crate::dto::jwt_dto::Claims;
 
 pub fn generate_tokken(id: i32) -> Result<String, jsonwebtoken::errors::Error> {
     let key = env::var("ENCRYPTION_KEY").expect("ENCRYPTION_KEY must be set");

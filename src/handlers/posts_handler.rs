@@ -1,9 +1,6 @@
 use crate::{
-    dto::jwt_dto::Claims,
-    entities::post,
-    error::AppError,
-    midlewares::auth_midleware::{self, authenticate_user},
-    state::AppState,
+    dto::jwt_dto::Claims, entities::post, error::AppError,
+    midlewares::auth_midleware::authenticate_user, state::AppState,
 };
 use axum::{extract::State, middleware, routing::get, Extension, Json, Router};
 use sea_orm::EntityTrait;
@@ -21,7 +18,7 @@ pub fn posts_router(state: AppState) -> Router {
 
 async fn get_posts(
     State(app_state): State<AppState>,
-    Extension(claims): Extension<Claims>,
+    Extension(_claims): Extension<Claims>,
 ) -> Result<Json<serde_json::Value>, AppError> {
     let posts = post::Entity::find().all(&app_state.db).await.unwrap();
     Ok(Json(json!({"posts": posts})))

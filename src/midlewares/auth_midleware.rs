@@ -1,6 +1,7 @@
 use axum::{body::Body, extract::State, http::Request, middleware::Next, response::Response};
+use sea_orm::EntityTrait;
 
-use crate::{error::AppError, state::AppState, utils::jwt::decode_token};
+use crate::{entities::user, error::AppError, state::AppState, utils::jwt::decode_token};
 
 pub async fn authenticate_user(
     State(state): State<AppState>,
@@ -16,6 +17,11 @@ pub async fn authenticate_user(
 
     let token_data = decode_token(token.unwrap());
 
+    user::Entity::find_by_id(token_data.claims.sub.parse::<i32>().unwrap())
+        .one(&state.db)
+        .await?;
+
     req.extensions_mut().insert(token_data.claims);
+
     Ok(next.run(req).await)
 }
